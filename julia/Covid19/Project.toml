@@ -1,0 +1,4 @@
+name = "Covid19"
+uuid = "4f777397-0811-4a8b-a8bb-78b812f68fa0"
+authors = ["Matt Willy <matt.willy@gmail.com>"]
+version = "0.1.0"
