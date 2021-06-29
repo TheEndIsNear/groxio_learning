@@ -15,4 +15,8 @@ defmodule Hello do
   def hello do
     :world
   end
+
+  def hello_json do
+    Jason.encode!(%{ hello: :world})
+  end
 end
