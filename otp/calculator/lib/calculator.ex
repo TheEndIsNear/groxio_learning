@@ -1,26 +1,11 @@
 defmodule Calculator do
-  alias Calculator.Boundary
+  alias Calculator.Server
 
-  def start(initial_state) do
-    Boundary.start(initial_state)
-  end
-
-  def add(calculator, n), do: send(calculator, {:add, n})
-  def subtract(calculator, n), do: send(calculator, {:subtract, n})
-  def multiply(calculator, n), do: send(calculator, {:multiply, n})
-  def divide(calculator, n), do: send(calculator, {:divide, n})
-
-  def clear(calculator), do: send(calculator, :clear)
-
-  def state(calculator) do
-    send(calculator, {:state, self()})
-
-    receive do
-      {:state, state} ->
-        state
-    after
-      5000 ->
-        {:error, :timeout}
-    end
-  end
+  defdelegate start(n), to: Server, as: :start_link
+  defdelegate add(n), to: Server
+  defdelegate subtract(n), to: Server
+  defdelegate multiply(n), to: Server
+  defdelegate divide(n), to: Server
+  defdelegate clear, to: Server
+  defdelegate state, to: Server
 end

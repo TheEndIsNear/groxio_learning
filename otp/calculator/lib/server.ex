@@ -2,18 +2,15 @@ defmodule Calculator.Server do
   use GenServer
   alias Calculator.Core
 
-  def add(pid, number), do: GenServer.cast(pid, {:add, number})
-  def subtract(pid, number), do: GenServer.cast(pid, {:subtract, number})
-  def multiply(pid, number), do: GenServer.cast(pid, {:multiply, number})
-  def divide(pid, number), do: GenServer.cast(pid, {:divide, number})
-  def clear(pid), do: GenServer.cast(pid, :clear)
-
-  def state(pid) do
-    GenServer.call(pid, :state)
-  end
+  def add(number), do: GenServer.cast(__MODULE__, {:add, number})
+  def subtract(number), do: GenServer.cast(__MODULE__, {:subtract, number})
+  def multiply(number), do: GenServer.cast(__MODULE__, {:multiply, number})
+  def divide(number), do: GenServer.cast(__MODULE__, {:divide, number})
+  def clear, do: GenServer.cast(__MODULE__, :clear)
+  def state, do: GenServer.call(__MODULE__, :state)
 
   def start_link(initial) when is_integer(initial) do
-    GenServer.start_link(__MODULE__, initial)
+    GenServer.start_link(__MODULE__, initial, name: __MODULE__)
   end
 
   def init(number) do
