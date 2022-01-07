@@ -6,5 +6,6 @@ defmodule Calculator do
   defdelegate multiply(n), to: Server
   defdelegate divide(n), to: Server
   defdelegate clear, to: Server
+  defdelegate negate, to: Server
   defdelegate state, to: Server
 end

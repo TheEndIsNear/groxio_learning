@@ -7,6 +7,7 @@ defmodule Calculator.Server do
   def multiply(number), do: GenServer.cast(__MODULE__, {:multiply, number})
   def divide(number), do: GenServer.cast(__MODULE__, {:divide, number})
   def clear, do: GenServer.cast(__MODULE__, :clear)
+  def negate, do: GenServer.cast(__MODULE__, :negate)
   def state, do: GenServer.call(__MODULE__, :state)
 
   def start_link(initial) when is_integer(initial) do
@@ -35,6 +36,10 @@ defmodule Calculator.Server do
 
   def handle_cast(:clear, _state) do
     {:noreply, 0}
+  end
+
+  def handle_cast(:negate, state) do
+    {:noreply, Core.negate(state)}
   end
 
   def handle_call(:state, _from, state) do
