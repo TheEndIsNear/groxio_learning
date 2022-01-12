@@ -1,0 +1,2 @@
+defmodule EggTimer do
+end
