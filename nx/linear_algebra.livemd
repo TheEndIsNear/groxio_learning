@@ -1,0 +1,43 @@
+# Linear Algebra in Nx
+
+## Setup
+
+```elixir
+Mix.install([
+  {:nx, "~> 0.1.0"}
+])
+```
+
+## Tensors
+
+```elixir
+t1 = Nx.iota({4, 2}, names: ~w[row col]a)
+t2 = Nx.iota({2, 3}, names: [:row, :col])
+
+dot_product = Nx.dot(t1, t2)
+
+{{rows, count}, {count, cols}, {rows, cols}} = {Nx.shape(t1), Nx.shape(t2), Nx.shape(dot_product)}
+```
+
+
+
+```elixir
+vector1 = t1[row: 0] |> Nx.reshape({2})
+vector2 = t2[col: 0] |> Nx.reshape({2})
+
+vector1 |> Nx.multiply(vector2) |> Nx.sum()
+```
+
+```elixir
+Nx.dot(t1[row: 0], t2[col: 0])
+```
+
+```elixir
+Nx.dot(t1[row: 3], t2[col: 2])
+```
+
+## Linear Regression
+
+```elixir
+
+```

@@ -154,3 +154,25 @@ t[0]
 ```elixir
 t[z: 0][x: 1..2]
 ```
+
+```elixir
+ten = Nx.iota({4, 4, 4}, type: {:u, 8}, names: [:batches, :rows, :columns])
+```
+
+```elixir
+t = Nx.random_uniform({3, 3, 3}, 1, 6)
+```
+
+```elixir
+defmodule Softmax do
+  import Nx.Defn
+
+  defn softmax(tensor) do
+    Nx.exp(tensor) / Nx.sum(Nx.exp(tensor))
+  end
+end
+
+t = Nx.tensor([[1, 2], [3, 4]])
+
+Softmax.softmax(t)
+```
