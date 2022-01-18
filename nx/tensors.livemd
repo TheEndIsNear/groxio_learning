@@ -1,0 +1,156 @@
+# Tensors
+
+## Section
+
+```elixir
+Mix.install([
+  {:nx, "~> 0.1.0"},
+  :vega_lite,
+  :kino
+])
+```
+
+```elixir
+import IEx.Helpers
+```
+
+```elixir
+h(Nx.ceil())
+```
+
+```elixir
+alias VegaLite
+
+time = 1..100
+dist = fn x -> :math.pow(x, 2) end
+
+VegaLite.new(width: 200, height: 200)
+|> VegaLite.data_from_series(time: time, distance: Enum.map(time, dist))
+|> VegaLite.mark(:line)
+|> VegaLite.encode_field(:x, "time", type: :quantitative)
+|> VegaLite.encode_field(:y, "distance", type: :quantitative)
+```
+
+```elixir
+tensor = 1..8 |> Enum.to_list() |> Nx.tensor()
+```
+
+```elixir
+i(Tensor)
+```
+
+```elixir
+Nx.tensor([1, 2, 3], type: {:u, 8})
+```
+
+```elixir
+[0, 0, 1] |> Nx.tensor() |> Nx.all()
+```
+
+```elixir
+1..6
+|> Enum.to_list()
+|> Nx.tensor()
+|> Nx.reshape({1, 2, 3}, names: [:x, :y, :z])
+```
+
+```elixir
+Map.keys(Nx.tensor([1, 2, 3]))
+```
+
+```elixir
+number = 123_456
+binary = <<number::size(32)-signed-integer-little>>
+Nx.from_binary(binary, {:u, 32}) |> Nx.reshape({1, 1})
+```
+
+```elixir
+Nx.broadcast(Nx.tensor(0, type: {:s, 8}), {2, 2, 2})
+```
+
+```elixir
+Nx.random_uniform({3}, 0, 5, type: {:u, 8})
+```
+
+```elixir
+{2, 2, 2}
+|> Nx.iota()
+
+Nx.iota({2, 4}, axis: 1)
+```
+
+```elixir
+one = Nx.tensor([1, 2, 3])
+two = Nx.tensor([2, 3, 4])
+Nx.Defn.Kernel.+(one, two)
+```
+
+```elixir
+defmodule MatrixMath do
+  import Nx.Defn
+
+  defn add(x, y) do
+    x + y
+  end
+end
+```
+
+```elixir
+{2, 2, 2}
+|> Nx.iota()
+|> Nx.cos()
+```
+
+```elixir
+{2, 2, 2}
+|> Nx.iota()
+|> Nx.Defn.Kernel.-()
+```
+
+```elixir
+tensor = Nx.iota({2, 3}, names: [:y, :x])
+```
+
+```elixir
+double = MatrixMath.add(tensor, tensor)
+```
+
+```elixir
+MatrixMath.add(tensor, 10)
+```
+
+```elixir
+Nx.Defn.Kernel.+(tensor, Nx.tensor([0, 0, 10]))
+```
+
+```elixir
+Nx.Defn.Kernel.+(tensor, Nx.tensor([[0], [10]]))
+```
+
+```elixir
+Nx.broadcast(0, {2, 2})
+```
+
+```elixir
+Nx.broadcast(Nx.tensor([[1, 2]]), {2, 2})
+```
+
+```elixir
+t = Nx.iota({1, 2, 3}, names: [:z, :y, :x])
+```
+
+```elixir
+t[0][1][2]
+```
+
+```elixir
+t[x: 2][y: 1][z: 0]
+```
+
+```elixir
+t[0]
+```
+
+```elixir
+t[z: 0][x: 1..2]
+```
