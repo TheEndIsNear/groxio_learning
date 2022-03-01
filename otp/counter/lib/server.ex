@@ -3,6 +3,7 @@ defmodule Counter.Server do
 
   def inc, do: GenServer.cast(__MODULE__, :inc)
   def state, do: GenServer.call(__MODULE__, :state)
+  def clear, do: GenServer.cast(__MODULE__, :clear)
 
   def start_link(state \\ 0) do
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
@@ -16,6 +17,10 @@ defmodule Counter.Server do
   @impl true
   def handle_cast(:inc, state) do
     {:noreply, state + 1}
+  end
+
+  def handle_cast(:clear, _state) do
+    {:noreply, 0}
   end
 
   @impl true
